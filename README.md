@@ -156,8 +156,8 @@ use o medusa para fazer um ataque de brute force no smb
 
 ![Usando para adquirir a senha do smb](Images/20_Smb_brute_force.png)
 
-teste o usuário e senha se conectando ao cliente smb
-> smbclient -L <> -U <usuário>
+teste o usuário e senha se conectando ao cliente smb e listando os diretórios
+> smbclient -L < //IP alvo > -U <usuário>
 
 ![Testando se o ataque teve suceso](Images/21_Logando_no_smbclient.png)
 
