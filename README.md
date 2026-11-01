@@ -1,3 +1,6 @@
+![Medusa template](Medusa_template.png)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+
 # Sobre O Projeto
 Guia descrevendo um teste de invasão do metasploitable 2 usando kali linux, medusa, hydra e enum4linux.
 
@@ -77,7 +80,7 @@ use a medusa para fazer um ataque de brute force no ftp do metasploitable
 
 ![Ataque de brute force no FTP](Images/07_Medusa_ataque.png)
 
-⚕️ **Síntese:**
+⚕️ **Síntese:** o passo inicial que permitiu foi a enumeração dos serviços e suas versões usando o nmap. A partir disso podemos pesquisar arquivos de configurações que contém falhas que podemos explorar, o usuário e senha padrão definido e até falhas de seguranças documentadas em sites como exploit-db e atacar a partir desse ponto.
 
 ## Ataque de brute force em formulários de login web
 Acesse o navegador e digite na barra de endereço < IP alvo/dvwa/login.php >
@@ -119,8 +122,7 @@ Antes da invasão, precisamos saber como os dados são organizados no formulári
 
 ![Entrando no site usando o usuário e senha do hydra](Images/15_dvwa_brute_force_login.png)
 
-⚕️ **Síntese:**
-
+⚕️ **Síntese:** Em um ambiente mais realista, o usuário e senha podem ser combinações comuns que a maioria das pessoas podem pensar como "12345" e "admin" ou podem ser mais complexas e únicas. Em um cenário controlado podemos minimizar as possíveis combinações por já possuirmos acesso a informações que não teríamos. Em cenários reais, seclists são usados para rodar as possíveis combinações e podemos adquirir essas listas buscando na internet como por exemplo https://github.com/danielmiessler/seclists
 
 ## Enumeração SMB e password spraying
 Utilize o o enum4linux para coletar informações do sistema
@@ -158,8 +160,7 @@ teste o usuário e senha se conectando ao cliente smb
 
 ![Testando se o ataque teve suceso](Images/21_Logando_no_smbclient.png)
 
-⚕️ **Síntese:**
+⚕️ **Síntese:** A enumeração dos dados do sistema nos permite ter acesso a lista de usuários, a partir dessa lista já filtramos as possíveis combinações, maior parte do trabalho seria achar a combinação entre os usuários existentes e uma combinação de seclist para achar as senhas. Como esse cenário foi bem contido, diminuímos a quantidade total apenas para ilustrar como o processo ocorre sem levar muito do tempo
 
 ## Conclusão
-
-📖 **Nota adicional:** Em um teste de invasão mais realista, não seria possível ter uma ideia tão clara sobre as possíveis combinações de usuário e senha. Tendo isso em mente, pessoas criaram listas contendo as combinações mais usadas, é possível ter acesso a essa lista na página: https://github.com/danielmiessler/seclists
+Existem várias maneiras e ferramentas que permitem invadir um site ou sistema. Por isso é necessário estar ciente de possíveis vetores de ataques como senhas padrões, versões antigas de programas que podem conter falhas e etc. Vigilância constante, boas práticas e estar ciente dos métodos, do modo como esses programas funcionam e tecnologias mais atuais são as maneiras mais eficazes de mitigar ataques. 
