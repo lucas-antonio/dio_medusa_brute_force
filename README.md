@@ -18,7 +18,7 @@ mude a configuração do tipo de conexão da máquina virtual contendo o metaspl
 
 mude a configuração do tipo de conexão da máquina virtual contendo o kali linux para "host-only"
 
-![mudando configuração de rede do kali linux para host-only](Imagens/00_Metasploitable2_configuracao_de_rede.png)
+![mudando configuração de rede do kali linux para host-only](Images/01_Kali_linux_configuracao_de_rede.png)
 
 ao criar essa configuração, ambos se tornam sistemas isolados, podendo apenas enxergar um ao outro na rede
 
