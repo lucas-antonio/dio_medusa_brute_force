@@ -14,7 +14,7 @@ https://github.com/danielmiessler/SecLists
 ## Preparações iniciais
 mude a configuração do tipo de conexão da máquina virtual contendo o metasploitable2 para "host-only"
 
-![mudando configuração de rede do metasploitable 2 para host-only](Imagens/00_Metasploitable2_configuracao_de_rede.png)
+![mudando configuração de rede do metasploitable 2 para host-only](Images/00_Metasploitable2_configuracao_de_rede.png)
 
 mude a configuração do tipo de conexão da máquina virtual contendo o kali linux para "host-only"
 
