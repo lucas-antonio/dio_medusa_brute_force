@@ -1,9 +1,6 @@
 # Sobre O Projeto
 Guia descrevendo um teste de invasão do metasploitable 2 usando kali linux, medusa, hydra e enum4linux.
 
-
-https://github.com/danielmiessler/SecLists
-
 ## Ferramentas necessárias
 + vmware ou virtualbox. Esse projeto usa especificamente o vmware
 + VM1
@@ -162,3 +159,7 @@ teste o usuário e senha se conectando ao cliente smb
 ![Testando se o ataque teve suceso](Images/21_Logando_no_smbclient.png)
 
 ⚕️ **Síntese:**
+
+## Conclusão
+
+📖 **Nota adicional:** Em um teste de invasão mais realista, não seria possível ter uma ideia tão clara sobre as possíveis combinações de usuário e senha. Tendo isso em mente, pessoas criaram listas contendo as combinações mais usadas, é possível ter acesso a essa lista na página: https://github.com/danielmiessler/seclists
