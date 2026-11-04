@@ -27,7 +27,7 @@ ao criar essa configuração, ambos se tornam sistemas isolados, podendo apenas 
 
 no metasploitable, depois de entrar com login e senha, descubra o ip da sua máquina virtual
 
-> ip a
+`ip a`
 
 anote o endereço de IP inet
 
@@ -35,7 +35,7 @@ anote o endereço de IP inet
 
 teste a conexão com a máquina do metasploitable usando ping
 
-> ping -c 5 < IP > 
+`ping -c 5 <IP>` 
 
 ![Teste de conexão usando ping](Images/03_Kali_linux_ping.png)
 
