@@ -1,12 +1,12 @@
-# Ataque de força bruta usando medusa no metasploitable
+# Auditoria de Segurança: Força Bruta e Password Spraying com Kali Linux e Metasploitable 2
 ![Medusa template](Medusa_template.png)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-## Sobre O Projeto
+## Sobre o Projeto
 Guia descrevendo um teste de invasão do metasploitable 2 usando kali linux, medusa, hydra e enum4linux.
 
 ## Ferramentas necessárias
-+ vmware ou virtualbox. Esse projeto usa especificamente o vmware
++ VMware ou virtualbox. Esse projeto usa especificamente o vmware
 + VM1
   + kali linux: https://cdimage.kali.org/kali-2026.2/kali-linux-2026.2-live-everything-amd64.iso.torrent
 + VM2
@@ -23,7 +23,7 @@ mude a configuração do tipo de conexão da máquina virtual contendo o kali li
 
 ao criar essa configuração, ambos se tornam sistemas isolados, podendo apenas enxergar um ao outro na rede
 
-⚠️ **Aviso:** crie um snapshot do metasploitable 2 antes para evitar ter que começar do zero caso algo aconteça ou que alguma prática feita anteriormente possa interferir de maneira negativa em outra.
+⚠️ **Aviso:** crie um snapshot do metasploitable 2 para evitar possíveis problemas futuros.
 
 no metasploitable, depois de entrar com login e senha, descubra o ip da sua máquina virtual
 
@@ -42,16 +42,16 @@ teste a conexão com a máquina do metasploitable usando ping
 ## Ataque de brute force no FTP do metasploitable
 use o nmap para enumeração de serviços, versões disponíveis e limite as varreduras para as portas 21,22,80,445,139
 
-`nmap -sV -p 21,22,80,445,139 <IP alvo>`
+`nmap -sV -p 21,22,80,445,139 <IP_ALVO>`
 
 💡 **Sugestão:** caso o nmap esteja demorando para processar as informações. Isso pode acontecer devido a resolução de DNS, caso isso aconteça, adicione o parâmetro "-n" no comando do nmap
 
-`nmap -sV -n -p 21,22,80,445,139 <IP alvo>`
+`nmap -sV -n -p 21,22,80,445,139 <IP_ALVO>`
 ![Listando os serviços do metasploitable usando nmap](Images/04_Nmap_captura.png)
 
 confirme se o ftp está ativo tentando se conectar a ele
 
-`ftp <IP alvo>`
+`ftp <IP_ALVO>`
 
 ![Teste de conexão FTP](Images/05_Conexao_ftp.png)
 
@@ -77,18 +77,23 @@ crie uma lista com as possíveis senhas
 
 use a medusa para fazer um ataque de brute force no ftp do metasploitable
 
-`medusa -h <IP alvo> -U nome_do_arquivo_usuario.txt -P nome_do_arquivo_senha.txt -M <módulo> -t <quantidade de threads>`
+`medusa -h <IP_ALVO> -U nome_do_arquivo_usuario.txt -P nome_do_arquivo_senha.txt -M <módulo> -t <quantidade de threads>`
 
 ![Ataque de brute force no FTP](Images/07_Medusa_ataque.png)
 
-⚕️ **Síntese:** o passo inicial que permitiu foi a enumeração dos serviços e suas versões usando o nmap. A partir disso podemos pesquisar arquivos de configurações que contém falhas que podemos explorar, o usuário e senha padrão definido e até falhas de seguranças documentadas em sites como exploit-db e atacar a partir desse ponto.
+⚕️ **Síntese:** o passo inicial que permitiu foi a enumeração dos serviços e suas versões usando o nmap. A partir disso podemos pesquisar arquivos de configurações que contém falhas que podemos explorar, o usuário e senha padrão definido e até falhas de segurança documentadas em sites como exploit-db e atacar a partir desse ponto.
 
 ## Ataque de brute force em formulários de login web
 Acesse o navegador e digite na barra de endereço < IP alvo/dvwa/login.php >
 
 ![Página dvwa](Images/08_Formulario_web.png)
 
-aperte o último botão do topo direito(do lado direito do ícone de quebra-cabeça), clique em "more tools", clique em "web developer tools" e vá para a aba "network". Isso permitirá ao navegador vigiar e listar as requisições.
+1. aperte o último botão do topo direito(do lado direito do ícone de quebra-cabeça)
+2. clique em "more tools"
+3. clique em "web developer tools"
+4. vá para a aba "network".
+
+Isso permitirá ao navegador vigiar e listar as requisições.
 
 ![Web developer tools 1º aba](Images/09_Web_developer_tools1.png)
 
@@ -108,7 +113,7 @@ Antes da invasão, precisamos saber como os dados são organizados no formulári
 
 ![Ataque de brute force usando hydra no FTP](Images/13_Hydra_dvwa_brute_force.png)
 
-❗**Complicação**: foi necessário usar o hydra para concluir essa parte, medusa consegue processar as reqisições, mas é incapaz de lidar com o redirecionamentoC(Código 302). Caso queira testar adapte o código abaixo para o seu uso.
+❗**Complicação**: Durante os testes, encontrei dificuldades na utilização do módulo web-form do Medusa para identificar corretamente o resultado da autenticação, especialmente devido ao comportamento de redirecionamento HTTP 302 apresentado pelo DVWA. Para concluir o cenário, utilizei o Hydra, que permitiu realizar as tentativas e validar o acesso.
 
 > medusa \
 > -h < IP alvo > \\ \
@@ -126,9 +131,9 @@ Antes da invasão, precisamos saber como os dados são organizados no formulári
 ⚕️ **Síntese:** Em um ambiente mais realista, o usuário e senha podem ser combinações comuns que a maioria das pessoas podem pensar como "12345" e "admin" ou podem ser mais complexas e únicas. Em um cenário controlado podemos minimizar as possíveis combinações por já possuirmos acesso a informações que não teríamos. Em cenários reais, seclists são usados para rodar as possíveis combinações e podemos adquirir essas listas buscando na internet como por exemplo https://github.com/danielmiessler/seclists
 
 ## Enumeração SMB e password spraying
-Utilize o o enum4linux para coletar informações do sistema
+Utilize o Enum4linux para coletar informações do sistema
 
-`enum4linux -a <IP alvo> | tee arquivo_saida.txt`
+`enum4linux -a <IP_ALVO> | tee arquivo_saida.txt`
 
 ![Enumerando a vm do metasploitable](Images/16_Enum4linux_enumeração.png)
 
@@ -150,16 +155,16 @@ crie uma lista de possíveis senhas e usuários que serão usados para entrar no
 
 ![Listando os usuários e senha criados para o ataque](Images/19_Enum4linux_senhas.png)
 
-Como já possuímos uma lista bem limitada de usuários, tudo que precisamos fazer é testar as possíveis combinações de senhas com os usuário(password spraying) no smb
+Como já possuímos uma lista bem limitada de usuários, tudo que precisamos fazer é testar as possíveis combinações de senhas com os usuários(password spraying) no smb
 
-`medusa -h < IP alvo > -U <arquivo_usuario.txt> -P <arquivo_senha.txt> -M <módulo> -t <quantidade de threads> -T <número total de hosts simultâneos>`
+`medusa -h <IP_ALVO> -U <arquivo_usuario.txt> -P <arquivo_senha.txt> -M <módulo> -t <quantidade de threads> -T <número total de hosts simultâneos>`
 
 ![Usando para adquirir a senha do smb](Images/20_Smb_brute_force.png)
 
 teste o usuário e senha se conectando ao cliente smb e listando os diretórios
-`smbclient -L <//IP alvo> -U <usuário>`
+`smbclient -L <//IP_ALVO> -U <usuário>`
 
-![Testando se o ataque teve suceso](Images/21_Logando_no_smbclient.png)
+![Testando se o ataque teve sucesso](Images/21_Logando_no_smbclient.png)
 
 ⚕️ **Síntese:** A enumeração dos dados do sistema nos permite ter acesso a lista de usuários, a partir dessa lista já filtramos as possíveis combinações, maior parte do trabalho seria achar a combinação entre os usuários existentes e uma combinação de seclist para achar as senhas. Como esse cenário foi bem contido, diminuímos a quantidade total apenas para ilustrar como o processo ocorre sem levar muito do tempo
 
@@ -184,7 +189,14 @@ Após realizar os testes em ambiente controlado, foi possível identificar algum
 - Restringir privilégios dos usuários.
 - Monitorar tentativas de autenticação e identificar padrões de password spraying.
 
+| Cenário | Ferramenta | Resultado |
+| :--- | :---: | ---: |
+| FTP | Medusa | Credenciais validadas |
+| DVWA | Enum4linux + Medusa | Usuários enumerados e autenticação testada |   
+
 ⚕️ **Síntese:** A combinação de políticas de senhas fortes, autenticação multifator, monitoramento contínuo e limitação de tentativas de autenticação reduz significativamente a possibilidade de ataques bem-sucedidos.
 
 ## Conclusão
 Existem várias maneiras e ferramentas que permitem invadir um site ou sistema. Por isso é necessário estar ciente de possíveis vetores de ataques como senhas padrões, versões antigas de programas que podem conter falhas e etc. Vigilância constante, boas práticas e estar ciente dos métodos, do modo como esses programas funcionam e tecnologias mais atuais são as maneiras mais eficazes de mitigar ataques. 
+
+⚠️ **Aviso de segurança:** Este projeto foi desenvolvido exclusivamente para fins educacionais, utilizando máquinas virtuais vulneráveis em ambiente controlado. Não utilize as técnicas apresentadas em sistemas de terceiros sem autorização expressa.
