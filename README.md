@@ -82,7 +82,7 @@ O laboratório utiliza duas máquinas virtuais conectadas por uma rede **Host-on
 
 Configure a interface de rede da VM Metasploitable 2 como `Host-only
 
-(Images/00_Metasploitable2_configuracao_de_rede.png)
+![mudando configuração de rede do metasploitable para host-only](Images/00_Metasploitable2_configuracao_de_rede.png)
 
 Repita a configuração na VM Kali Linux.
 
