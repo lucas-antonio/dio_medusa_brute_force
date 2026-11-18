@@ -150,7 +150,7 @@ crie uma lista de possíveis senhas e usuários que serão usados para entrar no
 
 ![Listando os usuários e senha criados para o ataque](Images/19_Enum4linux_senhas.png)
 
-use o medusa para fazer um ataque de brute force no smb
+Como já possuímos uma lista bem limitada de usuários, tudo que precisamos fazer é testar as possíveis combinações de senhas com os usuário(password spraying) no smb
 
 `medusa -h < IP alvo > -U <arquivo_usuario.txt> -P <arquivo_senha.txt> -M <módulo> -t <quantidade de threads> -T <número total de hosts simultâneos>`
 
@@ -162,6 +162,29 @@ teste o usuário e senha se conectando ao cliente smb e listando os diretórios
 ![Testando se o ataque teve suceso](Images/21_Logando_no_smbclient.png)
 
 ⚕️ **Síntese:** A enumeração dos dados do sistema nos permite ter acesso a lista de usuários, a partir dessa lista já filtramos as possíveis combinações, maior parte do trabalho seria achar a combinação entre os usuários existentes e uma combinação de seclist para achar as senhas. Como esse cenário foi bem contido, diminuímos a quantidade total apenas para ilustrar como o processo ocorre sem levar muito do tempo
+
+## Medidas de prevenção e mitigação
+
+Após realizar os testes em ambiente controlado, foi possível identificar algumas medidas que ajudam a reduzir os riscos de ataques de força bruta e password spraying.
+
+### FTP
++ Desabilitar o acesso FTP quando não for necessário
++ Preferir SFTP ou FTPS para transferências de arquivos
++ Utilizar senhas fortes e exclusivas.
+
+### Aplicações Web (DVWA)
++ Implementar limitação de tentativas de login
++ Utilizar CAPTCHA após tentativas suspeitas
++ Implementar bloqueio temporário após várias falhas de autenticação
++ Utilizar autenticação multifator (MFA).
+
+### SMB
+- Desabilitar versões antigas e inseguras do SMB.
+- Utilizar senhas fortes e políticas de bloqueio de contas.
+- Restringir privilégios dos usuários.
+- Monitorar tentativas de autenticação e identificar padrões de password spraying.
+
+⚕️ **Síntese:** A combinação de políticas de senhas fortes, autenticação multifator, monitoramento contínuo e limitação de tentativas de autenticação reduz significativamente a possibilidade de ataques bem-sucedidos.
 
 ## Conclusão
 Existem várias maneiras e ferramentas que permitem invadir um site ou sistema. Por isso é necessário estar ciente de possíveis vetores de ataques como senhas padrões, versões antigas de programas que podem conter falhas e etc. Vigilância constante, boas práticas e estar ciente dos métodos, do modo como esses programas funcionam e tecnologias mais atuais são as maneiras mais eficazes de mitigar ataques. 
