@@ -51,7 +51,7 @@ A atividade explora três cenários:
 | smbclient | Validação de acesso SMB |
 | VMware / VirtualBox | Virtualização das máquinas |
 
-**Configuração utilizada:** o laboratório foi montado com VMware. O desafio da DIO sugere VirtualBox, mas permite adaptar o ambiente à realidade do estudante.
+**Configuração utilizada:** o laboratório foi montado com VMware.
 
 ---
 
